@@ -1,0 +1,20 @@
+{
+  "name": "social_share_github_pages",
+  "version": "0.0.1",
+  "description": "Github pages for social_share",
+  "author": "Timrael",
+  "contributors": [
+    {
+      "name": "Fliptheweb"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.9",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-cssmin": "^0.1.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^1.2.0",
+    "gulp-uglify": "^1.0.1"
+  }
+}

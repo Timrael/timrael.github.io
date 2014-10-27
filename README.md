@@ -2,5 +2,5 @@
 
 ```
 npm install
-gulp ---require coffee-script
+gulp
 ```

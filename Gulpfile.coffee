@@ -1,39 +1,60 @@
 'use strict'
 
 gulp = require 'gulp'
+coffee = require 'gulp-coffee'
 rename = require 'gulp-rename'
-uglify = require 'gulp-uglify'
 sass = require 'gulp-sass'
-autoprefixer = require 'gulp-autoprefixer'
+postcss = require 'gulp-postcss'
+autoprefixer = require 'autoprefixer-core'
+
+uglify = require 'gulp-uglify'
 cssmin = require 'gulp-cssmin'
+imagemin = require 'gulp-imagemin'
 
-srcPaths =
-  scripts: 'src/scripts/**/*.coffee'
-  styles: 'src/styles/**/*.scss'
+newer = require 'gulp-newer'
 
-publicPaths =
-  scripts: 'public/js/'
-  styles: 'public/css/'
-
-gulp.task 'default', ->
-  gulp.src('foo.js')
-    .pipe(gulp.dest(DEST))
-    .pipe(uglify())
-    .pipe(rename(extname: '.min.js'))
-    .pipe gulp.dest publicPaths.scripts
+paths =
+  src:
+    css: 'src/styles/**/*.scss'
+    js: 'src/scripts/**/*.coffee'
+    img: 'src/img/*'
+    html: 'src/index.html'
+    vendor: 'src/vendor/**/*'
+  public:
+    css: 'public/css/'
+    js: 'public/js/'
+    img: 'public/img'
+    html: 'public/'
+    vendor: 'public/vendor/'
 
 gulp.task 'watch', ->
-#  gulp.watch srcPaths.scripts, ['js']
-  gulp.watch srcPaths.styles, ['css']
-
+  gulp.watch paths.src.js, ['js']
+  gulp.watch paths.src.css, ['css']
 
 gulp.task 'css', ->
-  gulp.src srcPaths.styles
+  gulp.src paths.src.css
     .pipe sass()
-    .pipe autoprefixer()
-    .pipe gulp.dest publicPaths.styles
+    .pipe postcss [autoprefixer { browsers: ['last 2 version'] }]
+    .pipe gulp.dest paths.public.css
 
 gulp.task 'js', ->
-  gulp.src srcPaths.scripts
-    .pipe(coffee({bare: true})).on('error', gutil.log)
-    .pipe gulp.dest publicPaths.scripts
+  gulp.src paths.src.js
+    .pipe coffee {bare: true}
+    .pipe gulp.dest paths.public.js
+
+gulp.task 'img', ->
+  gulp.src paths.src.img
+    .pipe newer paths.public.img
+    .pipe imagemin {optimizationLevel: 5}
+    .pipe gulp.dest paths.public.img
+
+gulp.task 'vendor', ->
+  gulp.src paths.src.vendor
+    .pipe gulp.dest paths.public.vendor
+
+gulp.task 'html', ->
+  gulp.src paths.src.html
+    .pipe gulp.dest paths.public.html
+
+gulp.task 'default', ['css', 'js', 'img', 'html', 'vendor']
+

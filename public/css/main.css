@@ -55,8 +55,7 @@ hr.small {
   margin-right: -250px;
   overflow-y: auto;
   background: #222;
-  -webkit-transition: all 0.4s ease 0s;
-          transition: all 0.4s ease 0s; }
+  transition: all 0.4s ease 0s; }
 
 .sidebar-nav {
   position: absolute;
@@ -104,8 +103,7 @@ hr.small {
 #sidebar-wrapper.active {
   right: 250px;
   width: 250px;
-  -webkit-transition: all 0.4s ease 0s;
-          transition: all 0.4s ease 0s; }
+  transition: all 0.4s ease 0s; }
 
 .toggle {
   margin: 5px 5px 0 0; }
